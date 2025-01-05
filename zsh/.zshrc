@@ -85,12 +85,9 @@ _compinit() {
         fpath=(${HOME}/.wezterm/completions $fpath)
     fi
 
-    if [[ $(type gcloud) > /dev/null ]]; then
-        if [[ ! -f /tmp/gcloud.completion ]]; then
-            cp "${dotfiles_dir}/google-cloud-sdk/completion.zsh.inc" /tmp/gcloud.completion
-        fi
-        . /tmp/gcloud.completion
-    fi
+    # if [[ $(type gcloud) > /dev/null ]]; then
+    #     . "${dotfiles_dir}/google-cloud-sdk/completion.zsh.inc"
+    # fi
 
     autoload -Uz compinit
     if [[ ${+COMPINIT_NO_CACHE} -eq 1 || ! -f /tmp/.zcompdump ]]; then
