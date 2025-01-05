@@ -17,6 +17,29 @@ select-word-style default
 zstyle ':zle:*' word-style unspecified
 zstyle ':zle:*' word-chars " ÷:@+|."
 
+DIRSTACKSIZE=100
+
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+
+HISTFILE=${HOME}/.zsh_history
+HISTORY_IGNORE="(cd|(cd *)|exit|ls|(ls *)|pwd)"
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt EXTENDED_HISTORY
+setopt HIST_ALLOW_CLOBBER
+setopt HIST_FCNTL_LOCK
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_NO_FUNCTIONS
+setopt HIST_NO_STORE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY
+setopt INC_APPEND_HISTORY_TIME
+
+setopt NO_BEEP
+
 if [[ $TERM_PROGRAM == "WezTerm" ]]; then
     path=(/Applications/WezTerm.app/Contents/MacOS $path)
 fi
