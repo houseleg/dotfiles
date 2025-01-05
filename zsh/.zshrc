@@ -2,6 +2,8 @@ _zcompile() {
     if [[ ${+NO_CACHE} -eq 1 ]]; then
         SHELDON_NO_CACHE=1
         STARSHIP_NO_CACHE=1
+        FZF_NO_CACHE=1
+        MISE_NO_CACHE=1
     fi
 
     if [[ $(type sheldon) > /dev/null ]]; then
@@ -21,6 +23,24 @@ _zcompile() {
         fi
         source /tmp/starship.cache
     fi
+
+    if [[ $(type fzf) > /dev/null ]]; then
+        if [[ ${+FZF_NO_CACHE} -eq 1 || ! -f /tmp/fzf.cache || $(find /tmp/fzf.cache -mtime +1) ]]; then
+            echo "creating fzf cache"
+            fzf --zsh > /tmp/fzf.cache
+            zcompile /tmp/fzf.cache
+        fi
+        source /tmp/fzf.cache
+    fi
+
+    if [[ $(type mise) > /dev/null ]]; then
+        if [[ ${+MISE_NO_CACHE} -eq 1 || ! -f /tmp/mise.cache || $(find /tmp/mise.cache -mtime +1) ]]; then
+            echo "creating mise cache"
+            mise activate zsh > /tmp/mise.cache
+            zcompile /tmp/mise.cache
+        fi
+        source /tmp/mise.cache
+    fi
 }
 _zcompile
 
@@ -31,6 +51,14 @@ _compinit() {
 
     # if [[ $(type starship) > /dev/null ]]; then
     #     starship completions zsh
+    # fi
+
+    # if [[ $(type pipx) > /dev/null ]]; then
+    #     eval "$(register-python-argcomplete pipx)"
+    # fi
+
+    # if [[ $(type gh) > /dev/null ]]; then
+    #     gh completion -s zsh > ${HOMEBREW_PREFIX}/share/zsh/site-functions/_gh
     # fi
 
     if [[ $(type brew) > /dev/null ]]; then
@@ -47,3 +75,10 @@ _compinit() {
     fi
 }
 _compinit
+
+path=(${HOME}/.local/bin $path)
+
+alias g='repo=$(ghq root)/$(ghq list | fzf --reverse) && cd $repo'
+alias gc='repo=$(ghq root)/$(ghq list | fzf --reverse) && cursor $repo'
+alias gv='repo=$(ghq root)/$(ghq list | fzf --reverse) && code $repo'
+alias mise-select='(){[[ -z $1 ]] && return 1 || version=$(mise ls-remote "$1" | sort -rV | fzf --reverse) && mise use "$1@$version"}'
