@@ -1,3 +1,5 @@
+dotfiles_dir=$(realpath .)
+
 _zcompile() {
     if [[ ${+NO_CACHE} -eq 1 ]]; then
         SHELDON_NO_CACHE=1
@@ -77,6 +79,13 @@ _compinit() {
 _compinit
 
 path=(${HOME}/.local/bin $path)
+
+if [[ -f "${dotfiles_dir}/google-cloud-sdk/path.zsh.inc" ]]; then
+    . "${dotfiles_dir}/google-cloud-sdk/path.zsh.inc";
+fi
+if [[ -f "${dotfiles_dir}/google-cloud-sdk/completion.zsh.inc" ]]; then
+    . "${dotfiles_dir}/google-cloud-sdk/completion.zsh.inc";
+fi
 
 alias g='repo=$(ghq root)/$(ghq list | fzf --reverse) && cd $repo'
 alias gc='repo=$(ghq root)/$(ghq list | fzf --reverse) && cursor $repo'
