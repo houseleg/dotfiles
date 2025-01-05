@@ -1,5 +1,17 @@
 dotfiles_dir=$(realpath .)
 
+bindkey -d
+
+bindkey '^[a' vi-beginning-of-line
+bindkey '^[g' vi-end-of-line
+bindkey '^[e' vi-forward-blank-word-end
+
+bindkey '^[u' kill-whole-line
+bindkey '^[w' vi-backward-kill-word
+
+bindkey '^[f' vi-forward-word
+bindkey '^[b' vi-backward-word
+
 if [[ $TERM_PROGRAM == "WezTerm" ]]; then
     path=(/Applications/WezTerm.app/Contents/MacOS $path)
 fi

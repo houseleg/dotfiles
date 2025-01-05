@@ -1,7 +1,14 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 
+local opacityEvent = require 'keybind.opacity'
+
 return {
+    leader = {
+        key = 'a',
+        mods = 'CTRL',
+        timeout_milliseconds = 2000,
+    },
     keys = {
         { key = 'Tab',        mods = 'CTRL',           action = act.ActivateTabRelative(1) },
         { key = 'Tab',        mods = 'SHIFT|CTRL',     action = act.ActivateTabRelative(-1) },
@@ -145,6 +152,58 @@ return {
         { key = 'DownArrow',  mods = 'SHIFT|ALT|CTRL', action = act.AdjustPaneSize { 'Down', 1 } },
         { key = 'Copy',       mods = 'NONE',           action = act.CopyTo 'Clipboard' },
         { key = 'Paste',      mods = 'NONE',           action = act.PasteFrom 'Clipboard' },
+        {
+            key = '-',
+            mods = 'LEADER',
+            action = act.SplitVertical { domain = 'CurrentPaneDomain' },
+        },
+        {
+            key = '|',
+            mods = 'LEADER',
+            action = act.SplitHorizontal { domain = 'CurrentPaneDomain' },
+        },
+        {
+            key = 'z',
+            mods = 'LEADER',
+            action = act.TogglePaneZoomState,
+        },
+        {
+            key = 'LeftArrow',
+            mods = 'ALT',
+            action = act.SendKey {
+                key = 'b',
+                mods = 'ALT',
+            },
+        },
+        {
+            key = 'RightArrow',
+            mods = 'ALT',
+            action = act.SendKey {
+                key = 'f',
+                mods = 'ALT',
+            },
+        },
+        {
+            key = '¥',
+            mods = 'ALT',
+            action = act.SendString '\\',
+        },
+        -- opacity
+        {
+            key = 'UpArrow',
+            mods = 'LEADER',
+            action = act.EmitEvent(opacityEvent.increaseOpacity),
+        },
+        {
+            key = 'DownArrow',
+            mods = 'LEADER',
+            action = act.EmitEvent(opacityEvent.decreaseOpacity),
+        },
+        {
+            key = 'b',
+            mods = 'LEADER',
+            action = act.EmitEvent(opacityEvent.toggleOpacity),
+        },
     },
 
     key_tables = {
