@@ -9,9 +9,6 @@ path=(${HOME}/.local/bin $path)
 if [[ -f "${dotfiles_dir}/google-cloud-sdk/path.zsh.inc" ]]; then
     . "${dotfiles_dir}/google-cloud-sdk/path.zsh.inc";
 fi
-if [[ -f "${dotfiles_dir}/google-cloud-sdk/completion.zsh.inc" ]]; then
-    . "${dotfiles_dir}/google-cloud-sdk/completion.zsh.inc";
-fi
 
 _zcompile() {
     if [[ ${+NO_CACHE} -eq 1 ]]; then
@@ -86,6 +83,13 @@ _compinit() {
             wezterm shell-completion --shell zsh > ${HOME}/.wezterm/completions/_wezterm
         fi
         fpath=(${HOME}/.wezterm/completions $fpath)
+    fi
+
+    if [[ $(type gcloud) > /dev/null ]]; then
+        if [[ ! -f /tmp/gcloud.completion ]]; then
+            cp "${dotfiles_dir}/google-cloud-sdk/completion.zsh.inc" /tmp/gcloud.completion
+        fi
+        . /tmp/gcloud.completion
     fi
 
     autoload -Uz compinit
