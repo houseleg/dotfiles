@@ -27,3 +27,4 @@ fi
 
 replace_symlink ${dotfiles_dir}/.zshenv ${HOME}/.zshenv
 replace_symlink ${dotfiles_dir}/zsh ${HOME}/.config/zsh
+replace_symlink ${dotfiles_dir}/git ${HOME}/.config/git

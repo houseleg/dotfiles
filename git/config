@@ -1,0 +1,11 @@
+[user]
+    name = houseleg
+    email = kosukefujita979@gmail.com
+
+[alias]
+    merge-dry-run = merge --no-commit --no-ff
+    merge-abort = merge --abort
+    commit-empty = commit --allow-empty
+
+[ghq]
+    root = ~/ghq
