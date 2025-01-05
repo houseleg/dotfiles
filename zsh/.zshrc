@@ -12,6 +12,11 @@ bindkey '^[w' vi-backward-kill-word
 bindkey '^[f' vi-forward-word
 bindkey '^[b' vi-backward-word
 
+autoload -Uz select-word-style
+select-word-style default
+zstyle ':zle:*' word-style unspecified
+zstyle ':zle:*' word-chars " ÷:@+|."
+
 if [[ $TERM_PROGRAM == "WezTerm" ]]; then
     path=(/Applications/WezTerm.app/Contents/MacOS $path)
 fi
