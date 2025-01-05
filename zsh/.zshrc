@@ -1,5 +1,18 @@
 dotfiles_dir=$(realpath .)
 
+if [[ $TERM_PROGRAM == "WezTerm" ]]; then
+    path=(/Applications/WezTerm.app/Contents/MacOS $path)
+fi
+
+path=(${HOME}/.local/bin $path)
+
+if [[ -f "${dotfiles_dir}/google-cloud-sdk/path.zsh.inc" ]]; then
+    . "${dotfiles_dir}/google-cloud-sdk/path.zsh.inc";
+fi
+if [[ -f "${dotfiles_dir}/google-cloud-sdk/completion.zsh.inc" ]]; then
+    . "${dotfiles_dir}/google-cloud-sdk/completion.zsh.inc";
+fi
+
 _zcompile() {
     if [[ ${+NO_CACHE} -eq 1 ]]; then
         SHELDON_NO_CACHE=1
@@ -67,6 +80,14 @@ _compinit() {
         fpath=(${HOMEBREW_PREFIX}/share/zsh/site-functions $fpath)
     fi
 
+    if [[ $(type wezterm) > /dev/null ]]; then
+        if ! [[ -d ${HOME}/.wezterm/completions ]]; then
+            mkdir -p ${HOME}/.wezterm/completions
+            wezterm shell-completion --shell zsh > ${HOME}/.wezterm/completions/_wezterm
+        fi
+        fpath=(${HOME}/.wezterm/completions $fpath)
+    fi
+
     autoload -Uz compinit
     if [[ ${+COMPINIT_NO_CACHE} -eq 1 || ! -f /tmp/.zcompdump ]]; then
         echo "creating dump file"
@@ -77,15 +98,6 @@ _compinit() {
     fi
 }
 _compinit
-
-path=(${HOME}/.local/bin $path)
-
-if [[ -f "${dotfiles_dir}/google-cloud-sdk/path.zsh.inc" ]]; then
-    . "${dotfiles_dir}/google-cloud-sdk/path.zsh.inc";
-fi
-if [[ -f "${dotfiles_dir}/google-cloud-sdk/completion.zsh.inc" ]]; then
-    . "${dotfiles_dir}/google-cloud-sdk/completion.zsh.inc";
-fi
 
 alias g='repo=$(ghq root)/$(ghq list | fzf --reverse) && cd $repo'
 alias gc='repo=$(ghq root)/$(ghq list | fzf --reverse) && cursor $repo'
