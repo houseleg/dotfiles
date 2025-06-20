@@ -2,6 +2,9 @@
     name = houseleg
     email = kosukefujita979@gmail.com
 
+[core]
+    symlinks = true
+
 [alias]
     merge-dry-run = merge --no-commit --no-ff
     merge-abort = merge --abort
