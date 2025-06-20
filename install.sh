@@ -38,6 +38,6 @@ replace_symlink ${dotfiles_dir}/zsh ${HOME}/.config/zsh
 replace_symlink ${dotfiles_dir}/zsh/.zshrc ${HOME}/.zshrc
 replace_symlink ${dotfiles_dir}/zsh/.zsh_history ${HOME}/.zsh_history
 replace_symlink ${dotfiles_dir}/wezterm ${HOME}/.config/wezterm
-replace_symlink ${dotfiles_dir}/sheldon ${HOME}/.config/sheldon
+replace_symlink ${dotfiles_dir}/settings/sheldon ${HOME}/.config/sheldon
 replace_symlink ${dotfiles_dir}/settings/starship ${HOME}/.config/starship
 replace_symlink ${dotfiles_dir}/settings/git ${HOME}/.config/git
