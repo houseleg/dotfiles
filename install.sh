@@ -40,4 +40,4 @@ replace_symlink ${dotfiles_dir}/zsh/.zsh_history ${HOME}/.zsh_history
 replace_symlink ${dotfiles_dir}/wezterm ${HOME}/.config/wezterm
 replace_symlink ${dotfiles_dir}/sheldon ${HOME}/.config/sheldon
 replace_symlink ${dotfiles_dir}/starship ${HOME}/.config/starship
-replace_symlink ${dotfiles_dir}/git ${HOME}/.config/git
+replace_symlink ${dotfiles_dir}/settings/git ${HOME}/.config/git
