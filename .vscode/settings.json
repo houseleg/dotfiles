@@ -1,4 +1,5 @@
 {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "sumneko.lua"
+    "editor.defaultFormatter": "sumneko.lua",
+    "terminal.integrated.stickyScroll.enabled": false
 }

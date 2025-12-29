@@ -1,4 +1,4 @@
-dotfiles_dir=$(realpath .)
+dotfiles_dir=$(dirname $(dirname $(realpath ${(%):-%x})))
 
 bindkey -d
 
@@ -40,22 +40,21 @@ setopt INC_APPEND_HISTORY_TIME
 
 setopt NO_BEEP
 
-if [[ $TERM_PROGRAM == "WezTerm" ]]; then
-    path=(/Applications/WezTerm.app/Contents/MacOS $path)
-fi
-
-path=(${HOME}/.local/bin $path)
-
-if [[ -f "${dotfiles_dir}/google-cloud-sdk/path.zsh.inc" ]]; then
-    . "${dotfiles_dir}/google-cloud-sdk/path.zsh.inc";
-fi
-
 _zcompile() {
     if [[ ${+NO_CACHE} -eq 1 ]]; then
+        MISE_NO_CACHE=1
         SHELDON_NO_CACHE=1
         STARSHIP_NO_CACHE=1
         FZF_NO_CACHE=1
-        MISE_NO_CACHE=1
+    fi
+
+    if [[ $(type mise) > /dev/null ]]; then
+        if [[ ${+MISE_NO_CACHE} -eq 1 || ! -f /tmp/mise.cache || $(find /tmp/mise.cache -mtime +1) ]]; then
+            echo "creating mise cache"
+            mise activate zsh > /tmp/mise.cache
+            zcompile /tmp/mise.cache
+        fi
+        source /tmp/mise.cache
     fi
 
     if [[ $(type sheldon) > /dev/null ]]; then
@@ -83,15 +82,6 @@ _zcompile() {
             zcompile /tmp/fzf.cache
         fi
         source /tmp/fzf.cache
-    fi
-
-    if [[ $(type mise) > /dev/null ]]; then
-        if [[ ${+MISE_NO_CACHE} -eq 1 || ! -f /tmp/mise.cache || $(find /tmp/mise.cache -mtime +1) ]]; then
-            echo "creating mise cache"
-            mise activate zsh > /tmp/mise.cache
-            zcompile /tmp/mise.cache
-        fi
-        source /tmp/mise.cache
     fi
 }
 _zcompile
@@ -125,22 +115,23 @@ _compinit() {
         fpath=(${HOME}/.wezterm/completions $fpath)
     fi
 
-    # if [[ $(type gcloud) > /dev/null ]]; then
-    #     . "${dotfiles_dir}/google-cloud-sdk/completion.zsh.inc"
-    # fi
-
-    autoload -Uz compinit
-    if [[ ${+COMPINIT_NO_CACHE} -eq 1 || ! -f /tmp/.zcompdump ]]; then
-        echo "creating dump file"
-        compinit -d /tmp/.zcompdump
-        compdump
-    else
-        compinit -C -d /tmp/.zcompdump
+    if [[ $(type gcloud) > /dev/null ]]; then
+        source $CLOUDSDK_ROOT_DIR/completion.zsh.inc
     fi
+
+    # autoload -Uz compinit
+    # if [[ ${+COMPINIT_NO_CACHE} -eq 1 || ! -f /tmp/.zcompdump ]]; then
+    #     echo "creating dump file"
+    #     compinit -d /tmp/.zcompdump
+    #     compdump
+    # else
+    #     compinit -C -d /tmp/.zcompdump
+    # fi
 }
 _compinit
 
 alias g='repo=$(ghq root)/$(ghq list | fzf --reverse) && cd $repo'
 alias gc='repo=$(ghq root)/$(ghq list | fzf --reverse) && cursor $repo'
 alias gv='repo=$(ghq root)/$(ghq list | fzf --reverse) && code $repo'
-alias mise-select='(){[[ -z $1 ]] && return 1 || version=$(mise ls-remote "$1" | sort -rV | fzf --reverse) && mise use "$1@$version"}'
+
+autoload -U +X bashcompinit && bashcompinit

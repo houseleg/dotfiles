@@ -1,0 +1,5 @@
+*
+!.gitignore
+!.zshenv
+!.zprofile
+!.zshrc
