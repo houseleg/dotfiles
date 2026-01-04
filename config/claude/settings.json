@@ -1,0 +1,15 @@
+{
+    "permissions": {
+        "ask": [
+            "Bash(rm:*)"
+        ]
+    },
+    "extraKnownMarketplaces": {
+        "personal-marketplace": {
+            "source": {
+                "source": "github",
+                "repo": "houseleg/claude-code-marketplace"
+            }
+        }
+    }
+}

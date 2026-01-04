@@ -49,3 +49,4 @@ replace_symlink ${dotfiles_dir}/wezterm ${HOME}/.config/wezterm
 replace_symlink ${dotfiles_dir}/config/sheldon ${HOME}/.config/sheldon
 replace_symlink ${dotfiles_dir}/config/starship ${HOME}/.config/starship
 replace_symlink ${dotfiles_dir}/config/git ${HOME}/.config/git
+replace_symlink ${dotfiles_dir}/config/claude ${HOME}/.config/claude
