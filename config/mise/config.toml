@@ -32,6 +32,10 @@ java = "openjdk-25"
 "pipx:ansible" = "latest"
 "aqua:tfutils/tfenv" = "latest"
 "vfox:mise-plugins/vfox-android-sdk" = "latest"
+"github:jetify-com/devbox" = "latest"
+"aqua:Kitware/CMake" = "latest"
+"npm:vercel" = "latest"
+"aqua:BurntSushi/ripgrep" = "latest"
 
 [env]
 _.path = [
